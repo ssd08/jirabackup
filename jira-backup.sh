@@ -85,10 +85,10 @@ chk_mnt_point()
 # Main
 #-------------------------------------------------------------------------------
 declare dest=/mnt/jiraback
-declare jirahome=/var/atlassian/application-data/jira
+declare dbpass=
 declare db=
 declare dbuser=
-declare dbpass=
+declare jirahome=/var/atlassian/application-data/jira
 declare timestamp=$(date +\%Y-\%m-\%d-\%I\%M\%p)
 
 
@@ -99,14 +99,35 @@ chk_dest $dest
 
 chk_mnt_point $dest
 
+
+# Can use first arg to avoid having Db password in cleartext in this script.
+while true; do
+  if [ -z $dbpass ]; then
+    if [ $1 ]; then
+      printf "Using first argument passed to this script as Db password.\n\n\n"
+      dbpass=$1
+      break
+    else
+      printf "No password provided for access to Jira Db\n\n"
+      printf "\nUse first argument passed to this script for Db password\n"
+      printf "($0 DB_PASSWD).\n"
+      printf "OR\n"
+      printf "Define \$dbpass in this script (less secure).\n\n\n"
+      break
+    fi
+    sleep 3
+  fi
+done
+
+
 printf "Dumping copy of Jira database to JIRA HOME\n(${jirahome})\n\n"
-sleep 5
+sleep 4
 mysqldump $db -u${dbuser} -p${dbpass} -v > ${jirahome}/jira.sql
 
 
 printf "Backing up Jira data/ and Jira database copy to the following:\n"
 printf "${dest}\n\n"
-sleep 6
+sleep 5
 
 tar cfvz ${dest}/jira-backup-${timestamp}.tar.gz \
 -C ${jirahome} ./data ./jira.sql
