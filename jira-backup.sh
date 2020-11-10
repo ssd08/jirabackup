@@ -3,7 +3,7 @@
 
 
 #-------------------------------------------------------------------------------
-# Comments
+# COMMENTS
 # Name: Jira Backup
 # Author: ssd08
 # About: backs up Jira database and JIRA HOME data directory.
@@ -19,7 +19,7 @@
 
 
 #-------------------------------------------------------------------------------
-# Function
+# FUNCTION
 # About: prints title of script in shell
 # Accepts: null
 # Returns: null
@@ -42,9 +42,9 @@ prnt_title()
 
 
 #-------------------------------------------------------------------------------
-# Function
+# FUNCTION
 # About: checks if destination for backups is mounted at $dest
-# Accepts: $dest as unitary argument
+# Accepts: $dest as unary argument
 # Returns: null
 #-------------------------------------------------------------------------------
 chk_dest()
@@ -61,9 +61,9 @@ chk_dest()
 
 
 #-------------------------------------------------------------------------------
-# Function
+# FUNCTION
 # About: checks if destination for backups is mounted at $dest
-# Accepts: $dest as unitary argument
+# Accepts: $dest as unary argument
 # Returns: null
 #-------------------------------------------------------------------------------
 chk_mnt_point()
@@ -82,7 +82,7 @@ chk_mnt_point()
 
 
 #-------------------------------------------------------------------------------
-# Main
+# MAIN
 #-------------------------------------------------------------------------------
 declare dest=/mnt/jiraback
 declare dbpass=
@@ -116,6 +116,8 @@ while true; do
       break
     fi
     sleep 3
+  else
+    break
   fi
 done
 
